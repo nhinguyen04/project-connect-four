@@ -20,16 +20,37 @@ class ConnectFour {
     Screen.initialize(6, 7);
     Screen.setGridlines(true);
 
-    // Replace this with real commands
-    Screen.addCommand('t', 'test command (remove)', ConnectFour.testCommand);
+    // commands
+    Screen.addCommand('left', 'move cursor left', this.cursor.left.bind(this.cursor));
+    Screen.addCommand('right', 'move cursor right', this.cursor.right.bind(this.cursor));
+    Screen.addCommand('up', 'move cursor up', this.cursor.up.bind(this.cursor));
+    Screen.addCommand('down', 'move cursor down', this.cursor.down.bind(this.cursor));
+
+    // places a move at cursor's position
+    Screen.addCommand('space', 'set a move at cursor location', ConnectFour.setMove.bind(this));
 
     this.cursor.setBackgroundColor();
     Screen.render();
   }
 
-  // Remove this
-  static testCommand() {
-    console.log("TEST COMMAND");
+  static setMove() {
+    Screen.render();
+    Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
+
+    // alternate turns
+    if (this.playerTurn === "O") {
+      this.playerTurn = "X";
+    } else {
+      this.playerTurn = "O";
+    }
+
+    // check winner
+    const winner = TTT.checkWin(Screen.grid);
+    if (!winner) {
+      Screen.render();
+    } else {
+      ConnectFour.endGame(winner);
+    }
   }
 
   static checkWin(grid) {
