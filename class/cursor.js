@@ -32,23 +32,23 @@ class Cursor {
     Screen.render();
   }
 
-  up() {
-    // Move cursor up
-    this._setMovementBefore();
-    if (this.row > 0) {
-      this.row -= 1;
-    }
-    this._setMovementAfter();
-  }
+  // up() {
+  //   // Move cursor up
+  //   this._setMovementBefore();
+  //   if (this.row > 0) {
+  //     this.row -= 1;
+  //   }
+  //   this._setMovementAfter();
+  // }
 
-  down() {
-    // Move cursor down
-    this._setMovementBefore();
-    if (this.row < 6) {
-      this.row += 1;
-    }
-    this._setMovementAfter();
-  }
+  // down() {
+  //   // Move cursor down
+  //   this._setMovementBefore();
+  //   if (this.row < 6) {
+  //     this.row += 1;
+  //   }
+  //   this._setMovementAfter();
+  // }
 
   left() {
     // Move cursor left

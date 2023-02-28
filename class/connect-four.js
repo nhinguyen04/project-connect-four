@@ -23,8 +23,8 @@ class ConnectFour {
     // commands
     Screen.addCommand('left', 'move cursor left', this.cursor.left.bind(this.cursor));
     Screen.addCommand('right', 'move cursor right', this.cursor.right.bind(this.cursor));
-    Screen.addCommand('up', 'move cursor up', this.cursor.up.bind(this.cursor));
-    Screen.addCommand('down', 'move cursor down', this.cursor.down.bind(this.cursor));
+    // Screen.addCommand('up', 'move cursor up', this.cursor.up.bind(this.cursor));
+    // Screen.addCommand('down', 'move cursor down', this.cursor.down.bind(this.cursor));
 
     // places a move at cursor's position
     Screen.addCommand('space', 'set a move at cursor location', ConnectFour.setMove.bind(this));
@@ -35,7 +35,13 @@ class ConnectFour {
 
   static setMove() {
     Screen.render();
-    Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
+
+    const openRow = ConnectFour.getOpenRow(Screen.grid, this.cursor.col);
+    if (openRow === false) {
+      console.log("Invalid move. Try again.");
+      return;
+    }
+    Screen.setGrid(openRow, this.cursor.col, this.playerTurn);
 
     // alternate turns
     if (this.playerTurn === "O") {
@@ -51,6 +57,18 @@ class ConnectFour {
     } else {
       ConnectFour.endGame(winner);
     }
+  }
+
+
+  static getOpenRow(grid, column) {
+    // iterate bottom row up
+    for (let row = 5; row >=0; row--) {
+      if (grid[row][column] === ' ') {
+        return row;
+      }
+    }
+
+    return false;
   }
 
   static checkWin(grid) {
@@ -208,7 +226,7 @@ class ConnectFour {
           if (currentSpot === mark) {
             count++
             // check bottom 3 diagonal
-            for (let bottomIndex = 0; bottomIndex <= 2; bottomIndex++) {
+            for (let bottomIndex = 1; bottomIndex < 4; bottomIndex++) {
               if (grid[row + bottomIndex][col + bottomIndex] === mark) {
                 count++;
               }
@@ -238,7 +256,7 @@ class ConnectFour {
           if (currentSpot === mark) {
             count++
             // check top 3 diagonal
-            for (let topIndex = 0; topIndex <= 2; topIndex++) {
+            for (let topIndex = 1; topIndex < 4; topIndex++) {
               if (grid[row - topIndex][col + topIndex] === mark) {
                 count++;
               }
