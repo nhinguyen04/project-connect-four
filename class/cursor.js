@@ -44,7 +44,7 @@ class Cursor {
   down() {
     // Move cursor down
     this._setMovementBefore();
-    if (this.row < 2) {
+    if (this.row < 6) {
       this.row += 1;
     }
     this._setMovementAfter();
@@ -62,7 +62,7 @@ class Cursor {
   right() {
     // Move cursor right
     this._setMovementBefore();
-    if (this.col < 2) {
+    if (this.col < 7) {
       this.col += 1;
     }
     this._setMovementAfter();
